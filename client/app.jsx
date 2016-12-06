@@ -1,5 +1,7 @@
 // console.log('hello world');
 
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Username} from './UserName.jsx'
@@ -37,6 +39,25 @@ addNewMessage(message){
 }
 
 
+componentWillMount(){
+
+  $.ajax({
+      url: "http://localhost:3000/pokemon",
+      method: "GET",
+      // data: ,
+      dataType: "json",
+      success: ( data ) => {
+        console.log(data);
+        console.log('success')
+      },
+      error: ( error ) => {
+        console.log( error );
+      }
+
+    });
+
+}
+
 
 
   render () {
@@ -55,5 +76,15 @@ addNewMessage(message){
 
 
 ReactDOM.render( <App/>, document.getElementById('app') );
+
+
+// $( document ).ready(function() {
+
+// $(".GetPokemon").on('click', () => {
+//   console.log('hello')
+// })
+
+//  })
+
 
 //user={this.state.user}

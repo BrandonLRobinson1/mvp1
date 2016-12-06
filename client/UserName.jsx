@@ -30,12 +30,14 @@ class Username extends React.Component {
       <div>
         <p>Enter your Username:</p>
         <input type="text" value={this.state.user} onChange={this.handleUser.bind(this)} />
-        <button onClick={ this.addUser.bind(this) }>Submit</button>
+        <button className="GetPokemon" onClick={ this.addUser.bind(this) }>Get Pokemon</button>
       </div>
     )
 
   }
 
 }
+
+
 
 export {Username}

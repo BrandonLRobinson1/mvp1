@@ -75,6 +75,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // console.log('hello world');
 	
+	
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 	
@@ -112,6 +113,25 @@
 	      });
 	    }
 	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	
+	      _jquery2.default.ajax({
+	        url: "http://localhost:3000/pokemon",
+	        method: "GET",
+	        // data: ,
+	        dataType: "json",
+	        success: function success(data) {
+	          console.log(data);
+	          console.log('success');
+	        },
+	        error: function error(_error) {
+	          console.log(_error);
+	        }
+	
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	
@@ -128,6 +148,15 @@
 	}(_react2.default.Component);
 	
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	
+	// $( document ).ready(function() {
+	
+	// $(".GetPokemon").on('click', () => {
+	//   console.log('hello')
+	// })
+	
+	//  })
+	
 	
 	//user={this.state.user}
 
@@ -22139,8 +22168,8 @@
 	        _react2.default.createElement('input', { type: 'text', value: this.state.user, onChange: this.handleUser.bind(this) }),
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.addUser.bind(this) },
-	          'Submit'
+	          { className: 'GetPokemon', onClick: this.addUser.bind(this) },
+	          'Get Pokemon'
 	        )
 	      );
 	    }
