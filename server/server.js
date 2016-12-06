@@ -47,17 +47,17 @@ app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/
 
 
 app.get("/pokemon", (req, res) => {
-console.log(req);
+console.log(req.query.name);
 //for(var i = 1; i < 3; i++){
 
 //********
-// request('http://pokeapi.co/api/v2/pokemon/77', function (error, response, body) {
-//   if (!error && response.statusCode == 200) {
-//     console.log(body) 
-//   }
-//   console.log(body) 
-//   res.send(body)
-// })
+request('http://pokeapi.co/api/v2/pokemon/' + req.query.name +'/', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log(body) 
+  }
+  console.log(body) 
+  res.send(body)
+})
 //***
 
 

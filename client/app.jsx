@@ -1,5 +1,3 @@
-// console.log('hello world');
-
 
 
 import React from 'react';
@@ -51,7 +49,18 @@ componentWillMount(){
     data: poke,
     success: (data)=>{
       console.log(context)
-      console.log(data)
+        var newPokemon = {
+        name: data.name,
+        height: data.height, 
+        weight: data.weight, 
+        order: data.order, 
+        id: data.id,
+        exp: data.base_experience, 
+        sprites: data.sprites.front_default
+      }
+      console.log(newPokemon)
+      //console.log(data)
+      // console.log(data.name, data.height, data.weight, data.order, data.id,data.base_experience, data.sprites.front_default)
       context.setState({
         pokemon: [].concat(data)
       })

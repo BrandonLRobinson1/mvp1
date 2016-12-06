@@ -75,8 +75,7 @@
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // console.log('hello world');
-	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -127,7 +126,18 @@
 	        data: poke,
 	        success: function success(data) {
 	          console.log(context);
-	          console.log(data);
+	          var newPokemon = {
+	            name: data.name,
+	            height: data.height,
+	            weight: data.weight,
+	            order: data.order,
+	            id: data.id,
+	            exp: data.base_experience,
+	            sprites: data.sprites.front_default
+	          };
+	          console.log(newPokemon);
+	          //console.log(data)
+	          // console.log(data.name, data.height, data.weight, data.order, data.id,data.base_experience, data.sprites.front_default)
 	          context.setState({
 	            pokemon: [].concat(data)
 	          });
