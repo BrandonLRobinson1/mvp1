@@ -6,10 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Username} from './UserName.jsx'
 import {Messages} from './messages.jsx'
+import {Pokeobj} from './pokeobj.jsx'
 import $ from 'jquery'
 
-var allpokemon = {};
-var newPokemon;
 class App extends React.Component {
   constructor(props){
     super(props)
@@ -17,9 +16,10 @@ class App extends React.Component {
     this.state = {
       user: 'charmander',
       photo: '',
-      messages: ''
+      messages: '',
+      pokemon: []
     };
-    // this.user = '';
+   
   }
 
 
@@ -42,49 +42,26 @@ addNewMessage(message){
 
 
 componentWillMount(){
-  var context = this;
-
-  class PokeObj {
-  constructor(name, height, weight, order, id, baseExperience, sprites)
-  {
-    this.name = name;
-    this.height = height;
-    this.weight = weight;
-    this.order = order;
-    this.id = id;
-    this.baseExperience = baseExperience;
-    this.sprites = sprites;
-  }
-}
-  
-for(var i = 1; i < 10; i++){
-  
-
-
-  $.ajax({
-      url: 'http://pokeapi.co/api/v2/pokemon/' + i + '/',
-      //getting information
-      type: "GET",
-      success: function(pokemon){
-        //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
-        // var newPokemon;
-        allpokemon[pokemon.name] = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id,pokemon.base_experience, pokemon.sprites.front_default);
-        console.log(allpokemon)
-        context.setState({
-          messages: allpokemon[pokemon.name]
-        });
-
-      },
-      error: function(){
-        console.log('fisssssssurreeeee')
-      }
-      // complete: function(){},
-  });
-
-
-}
-
-}
+ var context = this;
+ var poke = {"name": this.state.user}
+ $.ajax({
+    url: 'http://127.0.0.1:3000/pokemon',
+    type: 'GET',
+    dataType: 'JSON',
+    data: poke,
+    success: (data)=>{
+      console.log(context)
+      console.log(data)
+      context.setState({
+        pokemon: [].concat(data)
+      })
+    },
+    error: (err)=>{
+      console.log(error);
+    }
+  })
+ //end ajax
+ }
 
 
   render () {
@@ -94,7 +71,7 @@ for(var i = 1; i < 10; i++){
      
         <Username addNewUser={this.addNewUser.bind(this)}/> 
         <Messages addNewMessage={this.addNewMessage.bind(this)}/>
-
+        <Pokeobj />
       </div>
     )
 
@@ -103,6 +80,46 @@ for(var i = 1; i < 10; i++){
 
 
 ReactDOM.render( <App/>, document.getElementById('app') );
+
+
+ //var context = this;
+
+
+  
+// for(var i = 1; i < 10; i++){
+  
+
+
+//   $.ajax({
+//       url: 'http://pokeapi.co/api/v2/pokemon/' + i + '/',
+//       //getting information
+//       type: "GET",
+//       success: function(pokemon){
+//         //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
+//         // var newPokemon;
+//         allpokemon[pokemon.name] = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id,pokemon.base_experience, pokemon.sprites.front_default);
+//         console.log(allpokemon)
+//         context.setState({
+//           pokemon: allpokemon[pokemon.name];
+//         });
+
+//       },
+//       error: function(){
+//         console.log('fisssssssurreeeee')
+//       }
+//       // complete: function(){},
+//   });
+
+
+// }
+
+
+
+
+
+
+
+
 
 
 // $( document ).ready(function() {

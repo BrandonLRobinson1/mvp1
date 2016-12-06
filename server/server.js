@@ -8,8 +8,22 @@ var P = new Pokedex();
 var request = require('request');
 
 // app.use(express.static('../'))
+  
+var allpokemon = {};
+var newPokemon;
 
-var pokeData = [];
+  class PokeObj {
+  constructor(name, height, weight, order, id, baseExperience, sprites)
+  {
+    this.name = name;
+    this.height = height;
+    this.weight = weight;
+    this.order = order;
+    this.id = id;
+    this.baseExperience = baseExperience;
+    this.sprites = sprites;
+  }
+}
 
 // var data = "yellow"
 app.use(function(req, res, next) {
@@ -33,15 +47,21 @@ app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/
 
 
 app.get("/pokemon", (req, res) => {
+console.log(req);
+//for(var i = 1; i < 3; i++){
 
-request('http://pokeapi.co/api/v2/pokemon/charmander', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body) // Show the HTML for the Google homepage. 
-  res.send(body)
-  }
-})
+//********
+// request('http://pokeapi.co/api/v2/pokemon/77', function (error, response, body) {
+//   if (!error && response.statusCode == 200) {
+//     console.log(body) 
+//   }
+//   console.log(body) 
+//   res.send(body)
+// })
+//***
 
 
+  //res.send(body)
 });
 
 // app.post("/user", (req, res) => {
@@ -77,7 +97,7 @@ request('http://pokeapi.co/api/v2/pokemon/charmander', function (error, response
 // });
 
 app.all("*", (req, res) => {
-  console.log(users)
+  //console.log(users)
   res.send('nobody is home, unless your selling girl scout cookies')
 });
 

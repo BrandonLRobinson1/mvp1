@@ -38,6 +38,8 @@ class Username extends React.Component {
 
 }
 
-
+// $(".GetPokemon").on('click', () => {
+//   console.log('hello')
+// })
 
 export {Username}

@@ -63,7 +63,9 @@
 	
 	var _messages = __webpack_require__(/*! ./messages.jsx */ 179);
 	
-	var _jquery = __webpack_require__(/*! jquery */ 180);
+	var _pokeobj = __webpack_require__(/*! ./pokeobj.jsx */ 180);
+	
+	var _jquery = __webpack_require__(/*! jquery */ 181);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -76,9 +78,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // console.log('hello world');
 	
 	
-	var allpokemon = {};
-	var newPokemon;
-	
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 	
@@ -90,9 +89,10 @@
 	    _this.state = {
 	      user: 'charmander',
 	      photo: '',
-	      messages: ''
+	      messages: '',
+	      pokemon: []
 	    };
-	    // this.user = '';
+	
 	    return _this;
 	  }
 	
@@ -119,40 +119,34 @@
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
 	      var context = this;
-	
-	      var PokeObj = function PokeObj(name, height, weight, order, id, baseExperience, sprites) {
-	        _classCallCheck(this, PokeObj);
-	
-	        this.name = name;
-	        this.height = height;
-	        this.weight = weight;
-	        this.order = order;
-	        this.id = id;
-	        this.baseExperience = baseExperience;
-	        this.sprites = sprites;
-	      };
-	
-	      for (var i = 1; i < 10; i++) {
-	
-	        _jquery2.default.ajax({
-	          url: 'http://pokeapi.co/api/v2/pokemon/' + i + '/',
-	          //getting information
-	          type: "GET",
-	          success: function success(pokemon) {
-	            //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
-	            // var newPokemon;
-	            allpokemon[pokemon.name] = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id, pokemon.base_experience, pokemon.sprites.front_default);
-	            console.log(allpokemon);
-	            context.setState({
-	              messages: allpokemon[pokemon.name]
-	            });
-	          },
-	          error: function error() {
-	            console.log('fisssssssurreeeee');
+	      var poke = { "name": this.state.user };
+	      _jquery2.default.ajax({
+	        url: 'http://127.0.0.1:3000/pokemon',
+	        type: 'GET',
+	        dataType: 'JSON',
+	        data: poke,
+	        success: function success(data) {
+	          console.log(context);
+	          console.log(data);
+	          context.setState({
+	            pokemon: [].concat(data)
+	          });
+	        },
+	        error: function (_error) {
+	          function error(_x) {
+	            return _error.apply(this, arguments);
 	          }
-	          // complete: function(){},
-	        });
-	      }
+	
+	          error.toString = function () {
+	            return _error.toString();
+	          };
+	
+	          return error;
+	        }(function (err) {
+	          console.log(error);
+	        })
+	      });
+	      //end ajax
 	    }
 	  }, {
 	    key: 'render',
@@ -162,7 +156,8 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_UserName.Username, { addNewUser: this.addNewUser.bind(this) }),
-	        _react2.default.createElement(_messages.Messages, { addNewMessage: this.addNewMessage.bind(this) })
+	        _react2.default.createElement(_messages.Messages, { addNewMessage: this.addNewMessage.bind(this) }),
+	        _react2.default.createElement(_pokeobj.Pokeobj, null)
 	      );
 	    }
 	  }]);
@@ -171,6 +166,36 @@
 	}(_react2.default.Component);
 	
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	
+	//var context = this;
+	
+	
+	// for(var i = 1; i < 10; i++){
+	
+	
+	//   $.ajax({
+	//       url: 'http://pokeapi.co/api/v2/pokemon/' + i + '/',
+	//       //getting information
+	//       type: "GET",
+	//       success: function(pokemon){
+	//         //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
+	//         // var newPokemon;
+	//         allpokemon[pokemon.name] = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id,pokemon.base_experience, pokemon.sprites.front_default);
+	//         console.log(allpokemon)
+	//         context.setState({
+	//           pokemon: allpokemon[pokemon.name];
+	//         });
+	
+	//       },
+	//       error: function(){
+	//         console.log('fisssssssurreeeee')
+	//       }
+	//       // complete: function(){},
+	//   });
+	
+	
+	// }
+	
 	
 	// $( document ).ready(function() {
 	
@@ -22201,6 +22226,10 @@
 	  return Username;
 	}(_react2.default.Component);
 	
+	// $(".GetPokemon").on('click', () => {
+	//   console.log('hello')
+	// })
+	
 	exports.Username = Username;
 
 /***/ },
@@ -22283,6 +22312,63 @@
 
 /***/ },
 /* 180 */
+/*!****************************!*\
+  !*** ./client/pokeobj.jsx ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Pokeobj = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Pokeobj = function (_React$Component) {
+	  _inherits(Pokeobj, _React$Component);
+	
+	  function Pokeobj(props) {
+	    _classCallCheck(this, Pokeobj);
+	
+	    return _possibleConstructorReturn(this, (Pokeobj.__proto__ || Object.getPrototypeOf(Pokeobj)).call(this, props));
+	  }
+	
+	  _createClass(Pokeobj, [{
+	    key: 'render',
+	    value: function render() {
+	      // console.log(this.props)
+	      return null
+	      //   {this.props.pokeobj.map( item => 
+	      //   <div>
+	      //     {item.name}
+	      //   </div>
+	      //   )}
+	
+	      ;
+	    }
+	  }]);
+	
+	  return Pokeobj;
+	}(_react2.default.Component);
+	
+	exports.Pokeobj = Pokeobj;
+
+/***/ },
+/* 181 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
