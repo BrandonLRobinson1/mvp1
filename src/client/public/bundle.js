@@ -76,6 +76,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // console.log('hello world');
 	
 	
+	var newPokemon;
+	
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 	
@@ -85,7 +87,7 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
 	    _this.state = {
-	      user: '',
+	      user: 'charmander',
 	      photo: '',
 	      messages: ''
 	    };
@@ -115,20 +117,32 @@
 	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      var PokeObj = function PokeObj(name, height, weight, order, id, baseExperience, sprites) {
+	        _classCallCheck(this, PokeObj);
+	
+	        this.name = name;
+	        this.height = height;
+	        this.weight = weight;
+	        this.order = order;
+	        this.id = id;
+	        this.baseExperience = baseExperience;
+	        this.sprites = sprites;
+	      };
 	
 	      _jquery2.default.ajax({
-	        url: "http://localhost:3000/pokemon",
-	        method: "GET",
-	        // data: ,
-	        dataType: "json",
-	        success: function success(data) {
-	          console.log(data);
-	          console.log('success');
+	        url: 'http://pokeapi.co/api/v2/pokemon/' + 'charmander' + '/',
+	        //getting information
+	        type: "GET",
+	        success: function success(pokemon) {
+	          //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
+	          // var newPokemon;
+	          newPokemon = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id, pokemon.base_experience, pokemon.sprites.front_default);
+	          console.log(newPokemon);
 	        },
-	        error: function error(_error) {
-	          console.log(_error);
+	        error: function error() {
+	          console.log('wroooong biaaaatch');
 	        }
-	
+	        // complete: function(){},
 	      });
 	    }
 	  }, {

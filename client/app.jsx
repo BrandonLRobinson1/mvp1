@@ -7,13 +7,13 @@ import ReactDOM from 'react-dom';
 import {Username} from './UserName.jsx'
 import {Messages} from './messages.jsx'
 import $ from 'jquery'
-
+var newPokemon;
 class App extends React.Component {
   constructor(props){
     super(props)
 
     this.state = {
-      user: '',
+      user: 'charmander',
       photo: '',
       messages: ''
     };
@@ -41,20 +41,36 @@ addNewMessage(message){
 
 componentWillMount(){
 
-  $.ajax({
-      url: "http://localhost:3000/pokemon",
-      method: "GET",
-      // data: ,
-      dataType: "json",
-      success: ( data ) => {
-        console.log(data);
-        console.log('success')
-      },
-      error: ( error ) => {
-        console.log( error );
-      }
+  class PokeObj {
+  constructor(name, height, weight, order, id, baseExperience, sprites)
+  {
+    this.name = name;
+    this.height = height;
+    this.weight = weight;
+    this.order = order;
+    this.id = id;
+    this.baseExperience = baseExperience;
+    this.sprites = sprites;
+  }
+}
 
-    });
+
+  $.ajax({
+      url: 'http://pokeapi.co/api/v2/pokemon/' + 'charmander' + '/',
+      //getting information
+      type: "GET",
+      success: function(pokemon){
+        //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
+        // var newPokemon;
+        newPokemon = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id,pokemon.base_experience, pokemon.sprites.front_default);
+        console.log(newPokemon)
+      },
+      error: function(){
+        console.log('wroooong biaaaatch')
+      }
+      // complete: function(){},
+  });
+
 
 }
 
