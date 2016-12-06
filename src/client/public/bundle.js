@@ -76,6 +76,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // console.log('hello world');
 	
 	
+	var allpokemon = {};
 	var newPokemon;
 	
 	var App = function (_React$Component) {
@@ -117,6 +118,8 @@
 	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      var context = this;
+	
 	      var PokeObj = function PokeObj(name, height, weight, order, id, baseExperience, sprites) {
 	        _classCallCheck(this, PokeObj);
 	
@@ -129,21 +132,27 @@
 	        this.sprites = sprites;
 	      };
 	
-	      _jquery2.default.ajax({
-	        url: 'http://pokeapi.co/api/v2/pokemon/' + 'charmander' + '/',
-	        //getting information
-	        type: "GET",
-	        success: function success(pokemon) {
-	          //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
-	          // var newPokemon;
-	          newPokemon = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id, pokemon.base_experience, pokemon.sprites.front_default);
-	          console.log(newPokemon);
-	        },
-	        error: function error() {
-	          console.log('wroooong biaaaatch');
-	        }
-	        // complete: function(){},
-	      });
+	      for (var i = 1; i < 10; i++) {
+	
+	        _jquery2.default.ajax({
+	          url: 'http://pokeapi.co/api/v2/pokemon/' + i + '/',
+	          //getting information
+	          type: "GET",
+	          success: function success(pokemon) {
+	            //$("body").append(pokemon.id, pokemon.name, pokemon.base_experience, pokemon.height, pokemon.order, pokemon.weight, pokemon.sprites.front_default);
+	            // var newPokemon;
+	            allpokemon[pokemon.name] = new PokeObj(pokemon.name, pokemon.height, pokemon.weight, pokemon.order, pokemon.id, pokemon.base_experience, pokemon.sprites.front_default);
+	            console.log(allpokemon);
+	            context.setState({
+	              messages: allpokemon[pokemon.name]
+	            });
+	          },
+	          error: function error() {
+	            console.log('fisssssssurreeeee');
+	          }
+	          // complete: function(){},
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
