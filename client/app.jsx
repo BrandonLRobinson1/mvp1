@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Username} from './UserName.jsx'
+import {Messages} from './messages.jsx'
 import $ from 'jquery'
 
 class App extends React.Component {
@@ -10,12 +11,12 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      user: ''
+      user: '',
+      photo: '',
+      messages: ''
     };
-    this.user = '';
+    // this.user = '';
   }
-
-var user = ""
 
 
     addNewUser(user) {
@@ -26,8 +27,15 @@ var user = ""
       user: user
     })
     console.log(this.state.user)
-    this.user = this.state.user;
+    //this.user = this.state.user;
   }
+
+addNewMessage(message){
+  this.setState({
+    messages: message
+  })
+}
+
 
 
 
@@ -37,6 +45,7 @@ var user = ""
       <div>
      
         <Username addNewUser={this.addNewUser.bind(this)}/> 
+        <Messages addNewMessage={this.addNewMessage.bind(this)}/>
 
       </div>
     )

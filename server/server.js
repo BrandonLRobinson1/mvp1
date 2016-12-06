@@ -3,6 +3,8 @@ var users = require('../data/staticData');
 var app = express();
 var bodyParser = require('body-parser');
 
+app.use(express.static('../'))
+
 // var data = "yellow"
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -27,10 +29,10 @@ app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/
 
 
 
-// app.get("/user", (req, res) => {
-//   res.send(data)
+app.get("/user", (req, res) => {
+  res.send(users)
 
-// });
+});
 
 app.post("/user", (req, res) => {
   console.log('BODY: ', req.body);
@@ -40,17 +42,17 @@ app.post("/user", (req, res) => {
 
 });
 
-// app.get("/rooms", (req, res) => {
+app.get("/rooms", (req, res) => {
 
-//   res.send(data)
+  res.send(data)
 
-// });
+});
 
-// app.post("/rooms", (req, res) => {
+app.post("/rooms", (req, res) => {
 
-//   req.body.room
+  req.body.room
 
-// });
+});
 
 // app.get("/messages", (req, res) => {
 
@@ -65,7 +67,7 @@ app.post("/user", (req, res) => {
 // });
 
 app.all("*", (req, res) => {
-  console.log(data)
+  console.log(users)
   res.send('nobody is home, unless your selling girl scout cookies')
 });
 
