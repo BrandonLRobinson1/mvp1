@@ -6,22 +6,36 @@ class Username extends React.Component {
     super(props)
 
     this.state = {
-      user: props.user
-    };
+      user: ''
+    }
+
   }
+
+
+  handleUser(e){
+    this.setState({
+      user: e.target.value
+    });
+  }
+
+  addUser(){
+    this.props.addNewUser(this.state)
+  }
+
+  
 
   render () {
     console.log(this.props)
     return(
-      <form>
-        Enter your UserName:
-        <input onSubmit={this.handleSubmit} value={this.state.Username} />
-        <button type="submit">Submit</button>
-      </form>
-    
-
+      <div>
+        <p>Enter your Username:</p>
+        <input type="text" value={this.state.user} onChange={this.handleUser.bind(this)} />
+        <button onClick={ this.addUser.bind(this) }>Submit</button>
+      </div>
     )
+
   }
+
 }
 
 export {Username}

@@ -82,19 +82,30 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
 	    _this.state = {
-	      user: ''
+	      user: 'joe'
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(App, [{
+	    key: 'addNewUser',
+	    value: function addNewUser(user) {
+	      // this.state.dogs.push(dog); //already pushed the dog into the array
+	      // cant have this line in 35 because push doesn't return the array (it returns the length)
+	      // we have to do set state because if we don't call set state - react will NOT know to re-render
+	      this.setState({
+	        user: user
+	      });
+	      console.log(this.state.user);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_UserName.Username, { user: this.state.user })
+	        _react2.default.createElement(_UserName.Username, { addNewUser: this.addNewUser.bind(this) })
 	      );
 	    }
 	  }]);
@@ -103,6 +114,8 @@
 	}(_react2.default.Component);
 	
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	
+	//user={this.state.user}
 
 /***/ },
 /* 1 */
@@ -22049,7 +22062,7 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22079,24 +22092,41 @@
 	    var _this = _possibleConstructorReturn(this, (Username.__proto__ || Object.getPrototypeOf(Username)).call(this, props));
 	
 	    _this.state = {
-	      user: props.user
+	      user: ''
 	    };
+	
 	    return _this;
 	  }
 	
 	  _createClass(Username, [{
-	    key: "render",
+	    key: 'handleUser',
+	    value: function handleUser(e) {
+	      this.setState({
+	        user: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'addUser',
+	    value: function addUser() {
+	      this.props.addNewUser(this.state);
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      console.log(this.props);
 	      return _react2.default.createElement(
-	        "form",
+	        'div',
 	        null,
-	        "Enter your UserName:",
-	        _react2.default.createElement("input", { onSubmit: this.handleSubmit, value: this.state.Username }),
 	        _react2.default.createElement(
-	          "button",
-	          { type: "submit" },
-	          "Submit"
+	          'p',
+	          null,
+	          'Enter your Username:'
+	        ),
+	        _react2.default.createElement('input', { type: 'text', value: this.state.user, onChange: this.handleUser.bind(this) }),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.addUser.bind(this) },
+	          'Submit'
 	        )
 	      );
 	    }
