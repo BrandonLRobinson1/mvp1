@@ -6,17 +6,18 @@ class Pokeobj extends React.Component {
   }
 
   render(){
-    // console.log(this.props)
-    return( null
-    //   {this.props.pokeobj.map( item => 
-    //   <div>
-    //     {item.name}
-    //   </div>
-    //   )}
-
+    console.log(this.props)
+    return( 
+      // <iframe src{}></iframe>
+      <div> 
+        hi!! 
+      </div>
       )
   }
 }
 
 
 export {Pokeobj}
+
+//react lifecycles
+//how to deal with changing state

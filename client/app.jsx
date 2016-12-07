@@ -15,7 +15,7 @@ class App extends React.Component {
       user: 'charmander',
       photo: '',
       messages: '',
-      pokemon: []
+      pokemon: {}
     };
    
   }
@@ -39,9 +39,9 @@ addNewMessage(message){
 }
 
 
-componentWillMount(){
+componentDidMount(){
  var context = this;
- var poke = {"name": this.state.user}
+ var poke = {"name": 'charmander'}
  $.ajax({
     url: 'http://127.0.0.1:3000/pokemon',
     type: 'GET',
@@ -55,18 +55,17 @@ componentWillMount(){
         weight: data.weight, 
         order: data.order, 
         id: data.id,
-        exp: data.base_experience, 
+        exp: data.base_experience,
         sprites: data.sprites.front_default
       }
       console.log(newPokemon)
-      //console.log(data)
-      // console.log(data.name, data.height, data.weight, data.order, data.id,data.base_experience, data.sprites.front_default)
+
       context.setState({
-        pokemon: [].concat(data)
+        pokemon: newPokemon
       })
     },
     error: (err)=>{
-      console.log(error);
+      console.log(error)
     }
   })
  //end ajax
@@ -74,17 +73,19 @@ componentWillMount(){
 
 
   render () {
+    if(this.state.pokemon !== {}){
 
     return(
       <div>
-     
         <Username addNewUser={this.addNewUser.bind(this)}/> 
         <Messages addNewMessage={this.addNewMessage.bind(this)}/>
-        <Pokeobj />
+        <Pokeobj newPokemon={this.state.pokemon}/>
       </div>
     )
 
+    }else {return (null)}
   }
+
 }
 
 

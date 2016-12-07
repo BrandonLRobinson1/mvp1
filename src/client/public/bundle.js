@@ -89,7 +89,7 @@
 	      user: 'charmander',
 	      photo: '',
 	      messages: '',
-	      pokemon: []
+	      pokemon: {}
 	    };
 	
 	    return _this;
@@ -115,10 +115,10 @@
 	      });
 	    }
 	  }, {
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
 	      var context = this;
-	      var poke = { "name": this.state.user };
+	      var poke = { "name": 'charmander' };
 	      _jquery2.default.ajax({
 	        url: 'http://127.0.0.1:3000/pokemon',
 	        type: 'GET',
@@ -136,10 +136,9 @@
 	            sprites: data.sprites.front_default
 	          };
 	          console.log(newPokemon);
-	          //console.log(data)
-	          // console.log(data.name, data.height, data.weight, data.order, data.id,data.base_experience, data.sprites.front_default)
+	
 	          context.setState({
-	            pokemon: [].concat(data)
+	            pokemon: newPokemon
 	          });
 	        },
 	        error: function (_error) {
@@ -161,14 +160,18 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      if (this.state.pokemon !== {}) {
 	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_UserName.Username, { addNewUser: this.addNewUser.bind(this) }),
-	        _react2.default.createElement(_messages.Messages, { addNewMessage: this.addNewMessage.bind(this) }),
-	        _react2.default.createElement(_pokeobj.Pokeobj, null)
-	      );
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_UserName.Username, { addNewUser: this.addNewUser.bind(this) }),
+	          _react2.default.createElement(_messages.Messages, { addNewMessage: this.addNewMessage.bind(this) }),
+	          _react2.default.createElement(_pokeobj.Pokeobj, { newPokemon: this.state.pokemon })
+	        );
+	      } else {
+	        return null;
+	      }
 	    }
 	  }]);
 	
@@ -22360,15 +22363,15 @@
 	  _createClass(Pokeobj, [{
 	    key: 'render',
 	    value: function render() {
-	      // console.log(this.props)
-	      return null
-	      //   {this.props.pokeobj.map( item => 
-	      //   <div>
-	      //     {item.name}
-	      //   </div>
-	      //   )}
-	
-	      ;
+	      console.log(this.props);
+	      return (
+	        // <iframe src{}></iframe>
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'hi!!'
+	        )
+	      );
 	    }
 	  }]);
 	
@@ -22376,6 +22379,9 @@
 	}(_react2.default.Component);
 	
 	exports.Pokeobj = Pokeobj;
+	
+	//react lifecycles
+	//how to deal with changing state
 
 /***/ },
 /* 181 */
